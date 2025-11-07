@@ -63,3 +63,64 @@ Os arquivos ficarão na pasta `projects/n8n`.
 * Configurar e utilizar um nó de serviço de SMS para enviar mensagens formatadas.
 
 </details>
+<details>
+<summary><strong>Case 3: Triagem Inteligente de E-mails com IA (Classificação e Resposta)</strong></summary>
+
+**Objetivo:** Automatizar o atendimento ao cliente por e-mail, usando IA para classificar a complexidade (Simples/Complexo) e direcionar a ação correta.
+
+#### Estrutura do Workflow
+
+`Trigger (E-mail Recebido)` -> `IA Classificador ` -> `Nó "If" (Lógica Condicional)`
+
+* **Se SIMPLES:** -> `IA Gerador de Resposta Automática` -> `Enviar E-mail (Resposta ao Cliente)`
+* **Se COMPLEXO:** -> `IA Gerador de Sugestão (para Agente)` -> `Enviar E-mail (Sugestão para Equipe Interna)`
+
+#### Workflow Visual
+
+<img width="1581" height="786" alt="image" src="https://github.com/user-attachments/assets/9125e3a5-c59c-47ac-8655-0c074d832572" />
+
+#### Exemplos de Execução
+
+**1. Teste de Caso SIMPLES (Resposta Automática)**
+
+> **E-mail Recebido do Usuário:**
+> "Quais são os horários de atendimento da flexdata ?"
+>
+> **Resposta Automática (Gerada pela IA):**
+> "Prezado cliente,
+>
+> A FlexData atende dos segundas à sextas-feiras, das 8h às 18h. Estamos à disposição para ajudá-lo durante este horário.
+>
+> Atenciosamente,
+> Equipe FlexData"
+
+**2. Teste de Caso COMPLEXO (Sugestão para Atendente)**
+
+> **E-mail Recebido do Usuário:**
+> "Preciso desenvolver um produto de dados do zero, preciso fazer uma democratização de varias teabelas de logs do meu site e após isso fezer um dashboard para extrair insights desses dados, como vocês poderiam me ajudar a desenvolver essa ideia ?"
+>
+> **Sugestão Gerada pela IA (Enviada ao Atendente):**
+>
+> **Contexto:**
+> * O cliente precisa desenvolver um produto de dados do zero.
+> * Ele precisa democratizar várias tabelas de logs do seu site.
+> * Após isso, ele precisa criar um dashboard para extrair insights desses dados.
+>
+> **Proposta de solução para o atendente:**
+> * Gostaria de entender melhor suas necessidades. Poderia nos detalhar sobre as seguintes informações:
+>   * Quais são as principais tabelas de logs que você gostaria de democratizar?
+>   * Quais são os principais insights que você gostaria de extrair do seu dashboard?
+>   * Existem requisitos específicos para o desenvolvimento do seu produto de dados?
+> * Em seguida, podemos discutir as opções de tecnologia e soluções mais adequadas para atender às suas necessidades.
+
+---
+
+#### Aprendizados
+
+* Utilizar um modelo de IA  como um **classificador de texto** (ex: "SIMPLES" vs. "COMPLEXO").
+* Implementar **lógica condicional** (branching) usando o nó "If" para criar fluxos de trabalho diferentes.
+* Criar **prompts de IA distintos** para tarefas diferentes (um para classificar, outro para gerar resposta, outro para sugerir).
+* Automatizar o envio de e-mails contextuais, baseados na saída da IA.
+* Estruturar um fluxo de **triagem (triage) automatizado**, otimizando o tempo do atendimento humano.
+
+</details>
