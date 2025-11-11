@@ -1,0 +1,208 @@
+{
+  "name": "api-dolar-planilha",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6dbf373d-0456-4b9d-86f4-246e5105b937",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://economia.awesomeapi.com.br/last/USD-BRL",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "2c2dfc5e-46a4-4168-b9fe-6ff2870dec1f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c3dbc299-b1c7-404c-bd40-6202d08809fc",
+              "name": "valor_dolar",
+              "value": "={{ $json.USDBRL.bid }}",
+              "type": "string"
+            },
+            {
+              "id": "d6f08a05-341d-407a-bcdb-ddb5598db031",
+              "name": "data",
+              "value": "={{ $json.USDBRL.create_date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "c5d16160-79a8-4fde-bfa1-a4f4a02298e2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1yb319c83suFSkIjxKfVlf_PX_ZnIZs19zMIAGDDLNoY",
+          "mode": "list",
+          "cachedResultName": "Curso N8N",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yb319c83suFSkIjxKfVlf_PX_ZnIZs19zMIAGDDLNoY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2142809043,
+          "mode": "list",
+          "cachedResultName": "Api Dolar (ALURA)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yb319c83suFSkIjxKfVlf_PX_ZnIZs19zMIAGDDLNoY/edit#gid=2142809043"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Valor": "={{ $json.valor_dolar }}",
+            "Data": "={{ $json.data }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        0
+      ],
+      "id": "d030d6a4-2bbc-4b1b-bc16-660acc0c63b9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "9UYwx4zzI6wnhMMm",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "##  1 - Fluxo Simples Consumindo e armazenando dados de uma api\n*Entendendo a ferramento com comandos simples*",
+        "height": 384,
+        "width": 1152,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -64,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "083d377b-8d63-4359-bd0a-e163721d27bd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        896,
+        0
+      ],
+      "id": "f77d0e06-4426-4d10-88b2-378590bd6e9b",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "64df4d54-7a07-43d7-850d-d7e52e4bd8fb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c9f7fea64683f164e7b4d43367259d82b3cd74fe819a3a99a49430b7467d9008"
+  },
+  "id": "QwiB2rIacbySXVCS",
+  "tags": []
+}

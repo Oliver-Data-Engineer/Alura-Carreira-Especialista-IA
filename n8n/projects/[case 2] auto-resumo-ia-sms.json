@@ -1,0 +1,164 @@
+{
+  "name": "auto-resumo-ia-sms",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "21a1d56d-c268-43cd-b9a2-f7fc4371532a",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xznBcge2u6K7TnON",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7cb332ec-8476-46ab-9511-566868e806cb",
+              "name": "Remetente",
+              "value": "={{ $json.From }}",
+              "type": "string"
+            },
+            {
+              "id": "44c3e120-200c-476d-bffc-95eb367947da",
+              "name": "Header",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "890140f8-433f-4681-bab0-285ecf52a194",
+              "name": "Corpo",
+              "value": "={{ $json.snippet }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b05b551c-8d1a-4550-898e-6380116b6083",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "789243cc-45c6-44b9-a06d-edd715294cbd",
+      "name": "Message a model"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sms77",
+      "typeVersion": 1,
+      "position": [
+        768,
+        0
+      ],
+      "id": "ed181ea8-9015-4c42-aad3-78facd23326e",
+      "name": "Send an SMS"
+    },
+    {
+      "parameters": {
+        "content": "##  2 - Fluxo Simples Resumo Automatico de emails +  SMS\n*Resusmo via IA de Emails e envio desse resumo por SMS*",
+        "height": 384,
+        "width": 1152,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -64,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "a01ab94d-470b-47fc-b8d1-ab88c354d1b9",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send an SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1b0df17d-939b-4399-befc-3836df401280",
+  "meta": {
+    "instanceId": "c9f7fea64683f164e7b4d43367259d82b3cd74fe819a3a99a49430b7467d9008"
+  },
+  "id": "IS2Wn4XV8kkVA5M9",
+  "tags": []
+}
