@@ -124,3 +124,54 @@ Os arquivos ficarão na pasta `projects/n8n`.
 * Estruturar um fluxo de **triagem (triage) automatizado**, otimizando o tempo do atendimento humano.
 
 </details>
+
+<details open>
+<summary><strong>Case Final: Automação Completa de Feedback NPS com Multiagentes de IA</strong></summary>
+
+> 🔗 **Link do Projeto:** [Acessar o workflow "Agente Classificador" aqui]([COLE O LINK PARA A PÁGINA DO SEU PROJETO AQUI])
+
+**Objetivo:** Automatizar integralmente o ciclo de vida de uma pesquisa NPS. O fluxo captura a resposta, enriquece o dado com uma cadeia de 4 Agentes de IA (Groq), classifica o cliente (Detrator, Neutro, Promotor) e executa ações de negócios personalizadas (envia e-mails HTML customizados e cria cards no Trello).
+
+#### 🛠️ Tecnologias Utilizadas
+* ⚙️ **Orquestração:** n8n
+* 🧠 **IA (LLM):** Groq (Llama 3.1)
+* 🐍 **Processamento Lógico:** Python
+* 📊 **Armazenamento:** Google Sheets
+* 📧 **Notificações:** Microsoft Outlook
+* 📋 **Gestão de Tarefas:** Trello
+
+---
+
+#### Resumo do Fluxo
+
+1.  **Coleta:** `Form Trigger` captura (Nome, Email, Nota 0-5, Comentário).
+2.  **Lógica:** `Código Python` classifica a nota em "Detrator", "Neutro" ou "Promotor".
+3.  **Enriquecimento (IA):** Uma cadeia de 4 Agentes Groq analisa o comentário:
+    * `Agente Corretor` (Corrige ortografia)
+    * `Agente Sentimento` (Positivo, Negativo, Neutro)
+    * `Agente Categorias` (Produto, Atendimento, etc.)
+    * `Agente Motivadores` (Motivo raiz)
+4.  **Armazenamento:** `Google Sheets` salva todos os dados (originais + análise da IA).
+5.  **Ação (Switch):** O fluxo se divide com base na classificação:
+    * **➡️ Ramo Detrator 🚨:** Envia e-mail de alerta (HTML vermelho) para a equipe + Envia e-mail de desculpas para o cliente + Cria um Card de ação no Trello com toda a análise da IA.
+    * **➡️ Ramo Promotor 🎉 / Neutro 📊:** Envia e-mail de notificação (HTML verde/amarelo) para a equipe.
+
+#### Workflow Visual
+<img width="1153" height="691" alt="image" src="https://github.com/user-attachments/assets/1b4fded7-f266-404c-aec1-e2c5df5e7448" />
+
+---
+
+#### Aprendizados
+
+* Construir um workflow "end-to-end" (da coleta do dado até a ação de negócio).
+* Usar o nó de **Código Python** para implementar regras de negócio customizadas (Classificação NPS).
+* Estruturar uma **Cadeia de Agentes de IA**, onde a saída de um agente (ex: `Corretor`) é a entrada para os próximos.
+* Implementar lógica condicional complexa com o nó `Switch` para criar múltiplos ramos de execução.
+* Gerar **e-mails HTML dinâmicos**, personalizando o conteúdo e o estilo (cores) com base nos dados do fluxo.
+* Integrar um ecossistema completo de ferramentas (Planilha, Email, Gestão de Tarefas).
+* **Depurar (Debugging) e otimizar fluxos de IA:**
+    * Corrigir o **encadeamento de dados** (garantir que cada agente de IA leia o *input* correto, ex: `{{ $('Corretor').item.json.output }}`).
+    * Otimizar prompts para **economizar tokens** (ex: removendo inputs duplicados).
+    * Identificar e **remover nós redundantes** que não agregam valor ao fluxo.
+
+</details>
