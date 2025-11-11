@@ -128,7 +128,7 @@ Os arquivos ficarão na pasta `projects/n8n`.
 <details open>
 <summary><strong>Case Final: Automação Completa de Feedback NPS com Multiagentes de IA</strong></summary>
 
-> 🔗 **Link do Projeto:** [Acessar o workflow "Agente Classificador" aqui]([COLE O LINK PARA A PÁGINA DO SEU PROJETO AQUI])
+> 🔗 **Link do Projeto:** [Acessar o workflow "Agente Sentinela NPS" aqui](https://github.com/Oliver-Data-Engineer/World-N8N-/tree/main/Data-Core/Sentinela_nps)
 
 **Objetivo:** Automatizar integralmente o ciclo de vida de uma pesquisa NPS. O fluxo captura a resposta, enriquece o dado com uma cadeia de 4 Agentes de IA (Groq), classifica o cliente (Detrator, Neutro, Promotor) e executa ações de negócios personalizadas (envia e-mails HTML customizados e cria cards no Trello).
 
